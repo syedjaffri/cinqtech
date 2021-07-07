@@ -2,7 +2,6 @@ import unittest
 import time
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
-from selenium.webdriver.common import by
 from selenium.webdriver.common.by import By
 
 
@@ -14,13 +13,14 @@ class Login_test(unittest.TestCase):
             "platformName": "Android",
             "platformVersion": "9",
             "deviceName": "294a638c7b3f7ece",
-            "app": "/home/cinqtech/Downloads/build_0_27_2_ChangeId.apk"
+            "app": "/home/cinqtech/Downloads/build_0_27_2_ChangeId.apk",
+            "systemPort": "2810"
         }
         driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_cap)
         cls.driver = driver
 
     def test_01_landing_on_valid_page_after_login(self):
-        # self.setUpClass()
+        self.setUpClass()
         time.sleep(5)
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
         time.sleep(2)
@@ -44,8 +44,8 @@ class Login_test(unittest.TestCase):
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
         time.sleep(2)
         # TouchAction(self.driver).press(x=507, y=981).move_to(x=507, y=808).release().perform()
-        self.driver.find_element(by=By.XPATH, value="/hierarchy/android.widget.FrameLayout/android.widget.ListView"
-                                                    "/android.widget.RelativeLayout[1]").click()
+        self.driver.find_element(by=By.XPATH, value='/hierarchy/android.widget.FrameLayout/android.widget.ListView'
+                                                    '/android.widget.RelativeLayout[1]').click()
         time.sleep(2)
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_login").click()
         time.sleep(2)
@@ -70,7 +70,7 @@ class Login_test(unittest.TestCase):
 
     def test_04_landing_on_TFA_screen(self):
         self.setUpClass()
-        time.sleep(5)
+        time.sleep(6)
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
         time.sleep(2)
         # TouchAction(self.driver).press(x=507, y=981).move_to(x=507, y=808).release().perform()
@@ -78,7 +78,7 @@ class Login_test(unittest.TestCase):
                                                     "/android.widget.RelativeLayout[1]").click()
         time.sleep(2)
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_login").click()
-        time.sleep(2)
+        time.sleep(3)
         activity = self.driver.current_activity
         print(activity)
         time.sleep(2)
@@ -96,12 +96,13 @@ class Login_test(unittest.TestCase):
         self.driver.find_element(by=By.XPATH, value="/hierarchy/android.widget.FrameLayout/android.widget.ListView"
                                                     "/android.widget.RelativeLayout[3]").click()
         time.sleep(2)
-        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/etEmail").clear().send_keys("muzzamil@cinqtech.com")
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/etEmail").clear().send_keys("muzzamil"
+                                                                                                     "@cinqtech.com")
         time.sleep(2)
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_login").click()
         time.sleep(2)
         validation = self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/tvError").text
-        '''for checking the assertion is true or flase'''
+        '''for checking the assertion is true or false'''
         self.assertEqual("Email or Password is incorrect.", validation)
         print("test 05: login with incorrect email.")
         self.driver.close_app()
@@ -109,7 +110,7 @@ class Login_test(unittest.TestCase):
 
     def test_06_login_with_invalid_password(self):
         self.setUpClass()
-        time.sleep(2)
+        time.sleep(5)
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
         time.sleep(2)
         TouchAction(self.driver).press(x=507, y=981).move_to(x=507, y=808).release().perform()
@@ -120,7 +121,7 @@ class Login_test(unittest.TestCase):
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_login").click()
         time.sleep(2)
         validation = self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/tvError").text
-        '''for checking the assertion is true or flase'''
+        '''for checking the assertion is true or false'''
         self.assertEqual('Email or Password is incorrect.\nYou have 2 attempts remaining.', validation)
         print("test 06: login with incorrect password.")
         self.driver.close_app()
@@ -175,7 +176,7 @@ class Login_test(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.driver.quit()
+        # cls.driver.quit()
         print("test completed")
 
 
