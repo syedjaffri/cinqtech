@@ -22,29 +22,40 @@ class Login_test(unittest.TestCase):
         driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_cap)
         cls.driver = driver
 
-    def test_01_first_splash_screen(self):
-        first_splash_screen = self.driver.current_activity
-        print(first_splash_screen)
+    def test_01_login_valid_without_TFA(self):
+        # self.setUpClass()
+        time.sleep(5)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
         time.sleep(2)
-        self.assertEqual(".SplashActivity", first_splash_screen)
-        print("test 01 : Splash screen passed")
+        TouchAction(self.driver).press(x=507, y=981).move_to(x=507, y=808).release().perform()
+        self.driver.find_element(by=By.XPATH, value="/hierarchy/android.widget.FrameLayout/android.widget.ListView"
+                                                    "/android.widget.RelativeLayout[3]").click()
+        time.sleep(2)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_login").click()
+        time.sleep(2)
         self.driver.close_app()
-        time.sleep(3)
+        time.sleep(2)
 
-    def test_02_landing_on_registration_page(self):
+    def test_02_landing_on_valid_page_after_login(self):
         self.setUpClass()
-        time.sleep(10)
-        self.driver.find_element_by_id("com.bitjeem.android:id/tvRegister").click()
-        time.sleep(4)
+        time.sleep(5)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
+        time.sleep(2)
+        TouchAction(self.driver).press(x=507, y=981).move_to(x=507, y=808).release().perform()
+        self.driver.find_element(by=By.XPATH, value="/hierarchy/android.widget.FrameLayout/android.widget.ListView"
+                                                    "/android.widget.RelativeLayout[3]").click()
+        time.sleep(2)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_login").click()
+        time.sleep(3)
         activity = self.driver.current_activity
         print(activity)
-        time.sleep(3)
-        self.assertEqual(".NewRegistrationActivity", activity)
-        print("test 04 : landing on registration page passed.")
+        time.sleep(2)
+        self.assertEqual(".DashboardActivity", activity)
+        print("test 02: landing on valid page after login passed")
         self.driver.close_app()
         time.sleep(2)
 
-    def test_03_landing_on_valid_page_after_login(self):
+    def test_03_login_valid_with_TFA(self):
         self.setUpClass()
         time.sleep(5)
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
@@ -60,91 +71,90 @@ class Login_test(unittest.TestCase):
         self.driver.close_app()
         time.sleep(2)
 
-    def test_03_login_valid_without_TFA(self):
+    def test_04_landing_on_TFA_screen(self):
         self.setUpClass()
-        time.sleep(10)
-        self.driver.find_element_by_id("com.bitjeem.android:id/loginBtn").click()
-        time.sleep(4)
-        self.driver.find_element_by_id("com.bitjeem.android:id/etEmail").send_keys("ana@mailinator.com")
-        self.driver.find_element_by_id("com.bitjeem.android:id/etPassword").send_keys("system@123")
-        '''        Touch Actions for scrolling the page        '''
-        self.driver.hide_keyboard()
-        # TouchAction(self.driver).press(x=717, y=1098).move_to(x=717, y=489).release().perform()
-        time.sleep(5)
-        self.driver.find_element_by_id("com.bitjeem.android:id/loginBtn").click()
-        time.sleep(5)
-        activity = self.driver.current_activity
-        print(activity)
-        time.sleep(5)
-        self.assertEqual(".NewTwoFactorActivity", activity)
-        print("test 06: landing on Two factor authentication screen after login passed")
-        self.driver.close_app()
+        time.sleep(6)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
         time.sleep(2)
-
-    def test_05_landing_on_bitjeem_landing_page(self):
-        self.setUpClass()
-        time.sleep(10)
-        activity = self.driver.current_activity
-        print(activity)
+        # TouchAction(self.driver).press(x=507, y=981).move_to(x=507, y=808).release().perform()
+        self.driver.find_element(by=By.XPATH, value="/hierarchy/android.widget.FrameLayout/android.widget.ListView"
+                                                    "/android.widget.RelativeLayout[1]").click()
         time.sleep(2)
-        self.assertEqual(".NewLandingActivity", activity)
-        print("test 02: landing on bitjeem mobile landing page passed")
-        self.driver.close_app()
-        time.sleep(2)
-
-    def test_06_landing_on_login_page(self):
-        self.setUpClass()
-        time.sleep(10)
-        self.driver.find_element_by_id("com.bitjeem.android:id/loginBtn").click()
-        time.sleep(4)
-        activity = self.driver.current_activity
-        print(activity)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_login").click()
         time.sleep(3)
-        self.assertEqual(".NewLoginActivity", activity)
-        print("test 03 : landing on login page passed.")
+        activity = self.driver.current_activity
+        print(activity)
+        time.sleep(2)
+        self.assertEqual(".TwoFactorActivity", activity)
+        print("test 04: landing on Two factor authentication screen after login passed")
         self.driver.close_app()
         time.sleep(2)
 
-    def test_07_login_valid_with_TFA(self):
+    def test_05_login_invalid_useremail(self):
         self.setUpClass()
         time.sleep(5)
-        self.driver.find_element_by_id("com.bitjeem.android:id/loginBtn").click()
-        time.sleep(5)
-        self.driver.find_element_by_id("com.bitjeem.android:id/tfa_view").send_keys("123456")
-        time.sleep(5)
-        '''for logout'''
-        self.driver.find_element_by_id("com.bitjeem.android:id/btnLogout").click()
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
+        time.sleep(2)
+        TouchAction(self.driver).press(x=507, y=981).move_to(x=507, y=808).release().perform()
+        self.driver.find_element(by=By.XPATH, value="/hierarchy/android.widget.FrameLayout/android.widget.ListView"
+                                                    "/android.widget.RelativeLayout[3]").click()
+        time.sleep(2)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/etEmail").clear().send_keys("muzzamil"
+                                                                                                     "@cinqtech.com")
+        time.sleep(2)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_login").click()
+        time.sleep(2)
+        validation = self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/tvError").text
+        '''for checking the assertion is true or false'''
+        self.assertEqual("Email or Password is incorrect.", validation)
+        print("test 05: login with incorrect email.")
         self.driver.close_app()
         time.sleep(2)
 
-    def test_08_login_valid_without_TFA(self):
+    def test_06_login_with_invalid_password(self):
         self.setUpClass()
-        time.sleep(10)
-        self.driver.find_element_by_id("com.bitjeem.android:id/loginBtn").click()
-        time.sleep(4)
-        self.driver.find_element_by_id("com.bitjeem.android:id/etEmail").send_keys("muzammil1@cinqtech.com")
-        self.driver.find_element_by_id("com.bitjeem.android:id/etPassword").send_keys("system@123")
-        '''        Touch Actions for scrolling the page        '''
-        self.driver.hide_keyboard()
-        # TouchAction(self.driver).press(x=717, y=1098).move_to(x=717, y=489).release().perform()
         time.sleep(5)
-        self.driver.find_element_by_id("com.bitjeem.android:id/loginBtn").click()
-        time.sleep(5)
-        '''     for logout      '''
-        self.driver.find_element_by_id("com.bitjeem.android:id/btnLogout").click()
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
+        time.sleep(2)
+        TouchAction(self.driver).press(x=507, y=981).move_to(x=507, y=808).release().perform()
+        self.driver.find_element(by=By.XPATH, value="/hierarchy/android.widget.FrameLayout/android.widget.ListView"
+                                                    "/android.widget.RelativeLayout[3]").click()
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/etPassword").clear().send_keys("system@12345")
+        time.sleep(2)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_login").click()
+        time.sleep(2)
+        validation = self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/tvError").text
+        '''for checking the assertion is true or false'''
+        self.assertEqual('Email or Password is incorrect.\nYou have 2 attempts remaining.', validation)
+        print("test 06: login with incorrect password.")
         self.driver.close_app()
         time.sleep(2)
 
-    def test_09_login_with_invalid_password(self):
+    def test_07_landing_on_login_page(self):
         self.setUpClass()
-        time.sleep(10)
-        self.driver.find_element_by_id("com.bitjeem.android:id/loginBtn").click()
-        time.sleep(4)
-        self.driver.find_element_by_id("com.bitjeem.android:id/etEmail").send_keys("muzammil1@cinqtech.com")
-        self.driver.find_element_by_id("com.bitjeem.android:id/etPassword").send_keys("system@123123")
-        '''         Touch Actions for scrolling the page         '''
-        self.driver.hide_keyboard()
-        # TouchAction(self.driver).press(x=717, y=1098).move_to(x=717, y=489).release().perform()
+        time.sleep(5)
+        self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/loginBtn_landing").click()
+        time.sleep(2)
+        activity = self.driver.current_activity
+        print(activity)
+        time.sleep(2)
+        self.assertEqual(".LoginActivity", activity)
+        print("test 07 : landing on login page passed.")
+        self.driver.close_app()
+        time.sleep(2)
+
+    def test_08_first_splash_screen(self):
+        self.setUpClass()
+        first_splash_screen = self.driver.current_activity
+        print(first_splash_screen)
+        time.sleep(2)
+        self.assertEqual(".SplashActivity", first_splash_screen)
+        print("test 08 : Splash screen passed")
+        self.driver.close_app()
+        time.sleep(2)
+
+    def test_09_landing_on_registration_page(self):
+        self.setUpClass()
         time.sleep(5)
         self.driver.find_element(by=By.ID, value="com.bitjeem.android:id/tvRegister_landing").click()
         time.sleep(2)
