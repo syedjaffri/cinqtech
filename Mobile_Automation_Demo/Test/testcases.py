@@ -183,50 +183,50 @@ class Login_test(unittest.TestCase):
         print("test completed")
 
 
-html_report_dir = './Reports/HTML_Reports'
-xml_report_dir = './Reports/XML_Reports'
-
-
-def run_all_test():
-    unittest.main()
-
-
-# Run all test function and generate html report.
-def run_all_test_generate_html_report():
-    # Run all test functions with HtmlTestRunner to generate html test report.
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=html_report_dir))
-
-
-# Run all test function and generate html report.
-def run_all_test_generate_xml_report():
-    # Run all test functions with HtmlTestRunner to generate html test report.
-    unittest.main(testRunner=xmlrunner.XMLTestRunner(output=xml_report_dir))
-
-
-def run_all_test_in_class_generate_html_report(test_case_class):
-    # Create a TestSuite object.
-    test_suite = unittest.TestSuite()
-    # Make all test function
-    test = unittest.makeSuite(test_case_class)
-    test_suite.addTest(test)
-    # Create HtmlTestRunner object and run the test suite.
-    test_runner = HtmlTestRunner.HTMLTestRunner(output=html_report_dir)
-    test_runner.run(test_suite)
-
-
-# Run all test functions in the specified test case class, the function parameter must be a class name not the class
-# name string.
-def run_all_test_in_class_generate_xml_report(test_case_class):
-    # Create a TestSuite object.
-    test_suite = unittest.TestSuite()
-    # Make all test function
-    test = unittest.makeSuite(test_case_class)
-    test_suite.addTest(test)
-    # Create HtmlTestRunner object and run the test suite.
-    test_runner = xmlrunner.XMLTestRunner(output=xml_report_dir)
-    test_runner.run(test_suite)
+# html_report_dir = './Reports/HTML_Reports'
+# xml_report_dir = './Reports/XML_Reports'
+#
+#
+# def run_all_test():
+#     unittest.main()
+#
+#
+# # Run all test function and generate html report.
+# def run_all_test_generate_html_report():
+#     # Run all test functions with HtmlTestRunner to generate html test report.
+#     unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=html_report_dir))
+#
+#
+# # Run all test function and generate html report.
+# def run_all_test_generate_xml_report():
+#     # Run all test functions with HtmlTestRunner to generate html test report.
+#     unittest.main(testRunner=xmlrunner.XMLTestRunner(output=xml_report_dir))
+#
+#
+# def run_all_test_in_class_generate_html_report(test_case_class):
+#     # Create a TestSuite object.
+#     test_suite = unittest.TestSuite()
+#     # Make all test function
+#     test = unittest.makeSuite(test_case_class)
+#     test_suite.addTest(test)
+#     # Create HtmlTestRunner object and run the test suite.
+#     test_runner = HtmlTestRunner.HTMLTestRunner(output=html_report_dir)
+#     test_runner.run(test_suite)
+#
+#
+# # Run all test functions in the specified test case class, the function parameter must be a class name not the class
+# # name string.
+# def run_all_test_in_class_generate_xml_report(test_case_class):
+#     # Create a TestSuite object.
+#     test_suite = unittest.TestSuite()
+#     # Make all test function
+#     test = unittest.makeSuite(test_case_class)
+#     test_suite.addTest(test)
+#     # Create HtmlTestRunner object and run the test suite.
+#     test_runner = xmlrunner.XMLTestRunner(output=xml_report_dir)
+#     test_runner.run(test_suite)
 
 
 if __name__ == 'main':
-    run_all_test()
+    # run_all_test()
     unittest.main()
